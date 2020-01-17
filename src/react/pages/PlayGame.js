@@ -48,10 +48,7 @@ class PlayGame extends React.Component {
       <React.Fragment>
         <div className="twoBoards">
           <PlayerBoard />
-          <OpponentBoard
-            hitAddress={this.state.hitAddress}
-            missAddress={this.state.missAddress}
-          />
+          <OpponentBoard />
         </div>
         <SurrenderButton />
       </React.Fragment>
