@@ -10,7 +10,7 @@ class Home extends React.Component {
   render() {
     return (
       <div className="homePage">
-        <h1>Battleships</h1>
+        <h1>Battleship</h1>
         
         <Menu />
         <Welcome />
