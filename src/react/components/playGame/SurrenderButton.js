@@ -5,26 +5,9 @@ import { getOldMessages, deleteMessage } from "../../../redux/actionCreators";
 
 class SurrenderButton extends React.Component {
   onConfirm = () => {
-    // console.log("player surrendered");
-    //====================================================================
-    //janell says: stopping point: need to
-    //post "XXXX surrender" and add checking for "surrender" to andrew's part
-    //when we're looking for incoming torpedos
-    //=================================================================
-
-    // delete old messages function below:
-    //
-    //
-    //  DELETE OLD MESSAGES DOES NOT ACTUALLY WORK TO DELETE ANYTHING
-    //
-    //
-    //=================================================================
-
     var goHome = window.confirm("Click OK to be redirected to the home page.");
     if (goHome) {
-      // console.log("deleting old messages");
       this.deleteOldMessages();
-      // window.location.href = "/";
     }
   };
 
@@ -39,16 +22,10 @@ class SurrenderButton extends React.Component {
       .then((window.location.href = "/"));
   };
 
-  onCancel = () => {
-    // console.log("player continues fighting");
-  };
-
   confirmAlert = () => {
-    // console.log("surrender button clicked");
-
-    window.confirm("Do You Really Want To Surrender?")
-      ? this.onConfirm()
-      : this.onCancel();
+    if (window.confirm("Do You Really Want To Surrender?")) {
+      this.onConfirm();
+    }
   };
 
   render() {

@@ -5,7 +5,6 @@ import "./SetUpBoard.css";
 import { connect } from "../HOCs";
 import boards from "../components/setUpBoard/whereDoTheShipsLive";
 import { startBoard } from "../../redux/index";
-// import 'antd/dist/antd.css';
 
 class SetUpBoard extends React.Component {
   componentDidMount = () => {

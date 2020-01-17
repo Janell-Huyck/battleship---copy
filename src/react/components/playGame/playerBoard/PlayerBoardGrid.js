@@ -1,36 +1,14 @@
 import React from "react";
 import PlayerBoardSquare from "./PlayerBoardSquare";
 import { connect } from "../../../HOCs";
-// import horizontalDestroyer from "../../../../Battleship-image/ships/horizShip1.png"
-// import horizontalCruiser from "../../../../Battleship-image/ships/horizShip2.png"
-// import horizontalSubmarine from "../../../../Battleship-image/ships/horizShip3.png"
-// import horizontalBattleship from "../../../../Battleship-image/ships/horizShip4.png"
-// import horizontalCarrier from "../../../../Battleship-image/ships/horizShip5.png"
-// import verticalDestroyer from "../../../../Battleship-image/ships/vertShip1.png"
-// import verticalCruiser from "../../../../Battleship-image/ships/vertShip2.png"
-// import verticalSubmarine from "../../../../Battleship-image/ships/vertShip3.png"
-// import verticalBattleship from "../../../../Battleship-image/ships/vertShip4.png"
-// import verticalCarrier from "../../../../Battleship-image/ships/vertShip5.png"
-
-
-// import {
-//   placeBattleship,
-//   placeCarrier,
-//   placeCruiser,
-//   placeDestroyer,
-//   placeSubmarine
-// } from "../../../../redux/index";
 
 class PlayerBoardGrid extends React.Component {
   label = "";
   newRow = [];
   newBoard = [];
-  //use nested loops to define the Player divs
   rowLabels = [" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
   targetRow = null;
   targetColumn = null;
-  
-
 
   drawSquare = (label, isShip) => {
     return <PlayerBoardSquare value={label} isShip={isShip} key={label} />;
@@ -40,8 +18,6 @@ class PlayerBoardGrid extends React.Component {
     return <div key={rowLabel}>{newRow}</div>;
   };
 
-
-
   doesAShipResideHereAndIfSoWhichOne = coordinates => {
     if (this.props.battleshipPosition !== null) {
       if (this.props.battleshipPosition.coordinates.includes(coordinates)) {
@@ -50,7 +26,7 @@ class PlayerBoardGrid extends React.Component {
     }
 
     if (this.props.carrierPosition !== null) {
-      this.carrierLocation = []
+      this.carrierLocation = [];
       if (this.props.carrierPosition.coordinates.includes(coordinates)) {
         return true;
       }
@@ -83,10 +59,8 @@ class PlayerBoardGrid extends React.Component {
   };
 
   render() {
-    //emptying newBoard and newRow so it doesn't infinitely add to itself on changes to state
     this.newBoard = [];
     this.newRow = [];
-    //first, draw the header row
 
     for (let headerRowLabels = 0; headerRowLabels <= 10; headerRowLabels++) {
       if (headerRowLabels === 0) {
@@ -100,7 +74,6 @@ class PlayerBoardGrid extends React.Component {
 
     this.newBoard.push(this.drawRow(this.newRow, "header"));
 
-    //then draw the rest of the rows
     for (let row = 1; row <= 10; row++) {
       this.newRow = [];
       for (let column = 0; column <= 10; column++) {

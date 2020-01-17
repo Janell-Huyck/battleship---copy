@@ -4,7 +4,6 @@ import { withAsyncAction } from "../../HOCs";
 import { Redirect } from "../";
 import { connect } from "react-redux";
 import {
-  // deleteMessage,
   getOldMessages,
   startGame,
   login
@@ -47,14 +46,6 @@ class JoinGameForm extends React.Component {
       return false;
     }
   };
-
-  // deleteOldMessages = () => {
-  //   this.props.getOldMessages("playerB").then(result => {
-  //     result.payload.messages.map(message =>
-  //       this.props.deleteMessage(message.id)
-  //     );
-  //   });
-  // };
 
   checkGameNumber = () => {
     this.props
@@ -119,7 +110,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  // deleteMessage,
   getOldMessages,
   startGame,
   login

@@ -1,7 +1,3 @@
-//these "ship" components are for the setup board's
-//graphical drawings and for the play game page, to display the player's
-//own ships on their half of the board
-
 import React from "react";
 import carrierHorizontal from "../../../Battleship-image/ships/horizShip5.png";
 import carrierVertical from "../../../Battleship-image/ships/vertShip5.png";

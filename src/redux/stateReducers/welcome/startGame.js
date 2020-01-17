@@ -1,4 +1,3 @@
-//startGame state reducer
 import { STARTGAME } from "../../actionTypes";
 import { withAsyncReducer } from "../../HORs";
 

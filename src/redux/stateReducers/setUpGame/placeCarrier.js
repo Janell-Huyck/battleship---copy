@@ -1,4 +1,3 @@
-//placeShip state reducer (working)
 import { PLACECARRIER } from "../../actionTypes";
 import { withAsyncReducer } from "../../HORs";
 

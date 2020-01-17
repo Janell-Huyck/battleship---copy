@@ -1,17 +1,9 @@
-//ToDo: it needs to inform the player of the game number
-//so that their partner can load the game.
-
 import React from "react";
 import { withAsyncAction } from "../../HOCs";
 import { connect } from "react-redux";
 import { Redirect } from "..";
 import { WaitScreen } from "../waitScreen/";
-import {
-  checkReadyStart,
-  // getOldMessages,
-  // deleteMessage,
-  startGame
-} from "../../../redux/actionCreators";
+import { checkReadyStart, startGame } from "../../../redux/actionCreators";
 import "./CreateGameButton.css";
 
 class CreateGameButton extends React.Component {
@@ -42,14 +34,6 @@ class CreateGameButton extends React.Component {
     });
     this.interval = setInterval(this.checkReadyStart, 5000);
   };
-
-  // deleteOldMessages = () => {
-  //   this.props.getOldMessages("playerA").then(result => {
-  //     result.payload.messages.map(message =>
-  //       this.props.deleteMessage(message.id)
-  //     );
-  //   });
-  // };
 
   checkReadyStart = () => {
     if (this.props.token) {
@@ -120,8 +104,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   checkReadyStart,
-  // deleteMessage,
-  // getOldMessages,
   startGame
 };
 

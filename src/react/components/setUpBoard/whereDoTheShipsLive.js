@@ -1,14 +1,4 @@
 const boards = { 
-    //we want to know:
-    //hit ready game
-        //player board populated by ready messsage, ready messages to API
-        //get opponent messages from API, update opponent board
-        //send torpedo:
-                //message to API so opponent gets torpedo data
-                //change coordinates on my board to torpedo true
-                //check my state to find out if it's a hit or not
-                //check win 
-                //if not win, end turn.
 
     playerA: 
         {
