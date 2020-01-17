@@ -23,7 +23,7 @@ class FireButton extends React.Component {
 
   FireTorpedo = event => {
     if (this.props.TargetCell === null) {
-      alert("please choose coordinates by clicking on your opponent's board");
+      // alert("please choose coordinates by clicking on your opponent's board");
     } else {
       this.props.fireTorpedo({
         text:

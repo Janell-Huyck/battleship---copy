@@ -111,6 +111,7 @@ class OpponentBoard extends React.Component {
       this.checkStateForHitMarkers(this.props.TargetCell);
       this.setState({ opponentTurn: true });
     } else {
+      alert("Please select a torpedo destination before hitting 'Fire' ");
     }
   };
 
@@ -120,6 +121,8 @@ class OpponentBoard extends React.Component {
       this.returnDecision("Miss", cellToCheck);
     } else {
       alert("HIT!");
+      //can we change the target cell back to an empty string to prevent firing on the
+      //same square twice if we click "ready" prematurely?
       this.returnDecision("Hit", cellToCheck);
     }
   }
