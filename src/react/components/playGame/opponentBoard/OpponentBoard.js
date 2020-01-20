@@ -100,16 +100,27 @@ class OpponentBoard extends React.Component {
   };
 
   clickHandler = event => {
-    this.setState({ TargetCell: event.target.innerHTML });
-    this.props.addCoordinates(event.target.innerHTML);
-    this.startWaitingForOpponent();
+    if (this.checkThatNoTorpedoHasBeenFiredHere(event.target.innerHTML)) {
+      this.setState({ TargetCell: event.target.innerHTML });
+      this.props.addCoordinates(event.target.innerHTML);
+      this.startWaitingForOpponent();
+    }
+  };
+
+  checkThatNoTorpedoHasBeenFiredHere = gridSquare => {
+    if (
+      this.props.board[this.state.opponentName][gridSquare].torpedo === false
+    ) {
+      return true;
+    }
+    return false;
   };
 
   handleFireButtonClick = () => {
     if (this.state.TargetCell) {
       console.log("we have a target cell " + this.state.TargetCell);
       this.checkStateForHitMarkers(this.props.TargetCell);
-      this.setState({ opponentTurn: true });
+      this.setState({ opponentTurn: true, TargetCell: "" });
     } else {
       alert("Please select a torpedo destination before hitting 'Fire' ");
     }
@@ -121,8 +132,6 @@ class OpponentBoard extends React.Component {
       this.returnDecision("Miss", cellToCheck);
     } else {
       alert("HIT!");
-      //can we change the target cell back to an empty string to prevent firing on the
-      //same square twice if we click "ready" prematurely?
       this.returnDecision("Hit", cellToCheck);
     }
   }
