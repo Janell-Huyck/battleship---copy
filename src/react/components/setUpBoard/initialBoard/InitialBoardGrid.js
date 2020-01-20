@@ -19,7 +19,6 @@ class InitialBoardGrid extends React.Component {
   label = "";
   newRow = [];
   newBoard = [];
-  //use nested loops to define the initial divs
   rowLabels = [" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
   targetRow = null;
   targetColumn = null;
@@ -40,10 +39,9 @@ class InitialBoardGrid extends React.Component {
   };
 
   checkForHeader = e => {
-    if (e.target.innerHTML.length === 1){
-      // console.log("test");
+    if (e.target.innerHTML.length === 1) {
     }
-  }
+  };
 
   drawRow = (newRow, rowLabel) => {
     return <div key={rowLabel}>{newRow}</div>;
@@ -93,9 +91,8 @@ class InitialBoardGrid extends React.Component {
     this.targetColumn = e.target.innerHTML.slice(1);
     if (this.targetColumn === "" || this.targetColumn === "0") {
       return;
-    } //is the case if a header row/column is clicked
+    }
     if (this.props.activeShip === null) {
-      // console.log("No ship selected");
     } else {
       this.placeShip(this.props.activeShip.name);
     }
@@ -176,10 +173,8 @@ class InitialBoardGrid extends React.Component {
   };
 
   render() {
-    //emptying newBoard and newRow so it doesn't infinitely add to itself on changes to state
     this.newBoard = [];
     this.newRow = [];
-    //first, draw the header row
 
     for (let headerRowLabels = 0; headerRowLabels <= 10; headerRowLabels++) {
       if (headerRowLabels === 0) {
@@ -193,7 +188,6 @@ class InitialBoardGrid extends React.Component {
 
     this.newBoard.push(this.drawRow(this.newRow, "header"));
 
-    //then draw the rest of the rows
     for (let row = 1; row <= 10; row++) {
       this.newRow = [];
       for (let column = 0; column <= 10; column++) {
@@ -221,7 +215,9 @@ class InitialBoardGrid extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    playerName: state.auth.login.result ? state.auth.login.result.username : null,
+    playerName: state.auth.login.result
+      ? state.auth.login.result.username
+      : null,
     activeShip: state.setUpGame.selectShip.result,
     battleshipPosition: state.setUpGame.placeBattleship.result,
     carrierPosition: state.setUpGame.placeCarrier.result,

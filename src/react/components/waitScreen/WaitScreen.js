@@ -45,15 +45,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  // checkReadyStart,
   deleteMessage,
   getOldMessages
-  // startGame
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withAsyncAction("auth", "login")(WaitScreen));
-
-// export default WaitScreen;

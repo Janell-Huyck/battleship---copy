@@ -1,13 +1,11 @@
-import { STARTBOARD, 
-        UPDATEBOARD } 
-          from "../actionTypes";
+import { STARTBOARD, UPDATEBOARD } from "../actionTypes";
 
-export const startBoard = (originalBoard) => dispatch =>{
-    return dispatch({
-        type: STARTBOARD.SUCCESS,
-        payload: originalBoard
-    })
-}
+export const startBoard = originalBoard => dispatch => {
+  return dispatch({
+    type: STARTBOARD.SUCCESS,
+    payload: originalBoard
+  });
+};
 
 export const updateBoard = (
   player,
@@ -26,7 +24,3 @@ export const updateBoard = (
     payload: { player, coordinates, shipName, torpedo }
   });
 };
-
-// updateBoard("A1", null, true);
-
-// updateBoard("A1", shipName, false);

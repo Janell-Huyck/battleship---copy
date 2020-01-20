@@ -7,8 +7,6 @@ import {
   SELECTSHIP
 } from "../actionTypes";
 
-//battleship-capstone-api.herokuapp.com/messages
-
 export const placeBattleship = messageData => dispatch => {
   return dispatch({
     type: PLACEBATTLESHIP.SUCCESS,

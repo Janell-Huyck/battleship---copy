@@ -1,10 +1,3 @@
-//This is our bragging page!
-//Let's make it look nice :)
-// include names of all group members
-//give credit for what each person did
-//suggestion: divide project by major items or pages,
-// and list who worked on what
-//important to include that the backend and HOC structure isn't ours
 import React from "react";
 import { Menu } from "../components";
 import "./Credits.css";
@@ -23,16 +16,16 @@ class Credits extends React.Component {
           <h4>The people who made this happen:</h4>
         </div>
         <div className="teamBox">
-            <div id="janell">
-              Janell Huyck
-              <br />
-              <hr />
-              Connect with Janell
-              <a href="https://www.linkedin.com/in/janell-huyck-b050a05a/">
-                LinkedIn
-              </a>
-              <a href="https://gitlab.com/Janell">Gitlab</a>
-            </div>
+          <div id="janell">
+            Janell Huyck
+            <br />
+            <hr />
+            Connect with Janell
+            <a href="https://www.linkedin.com/in/janell-huyck-b050a05a/">
+              LinkedIn
+            </a>
+            <a href="https://gitlab.com/Janell">Gitlab</a>
+          </div>
 
           <hr />
 
@@ -61,8 +54,6 @@ class Credits extends React.Component {
                 </a>
               </div>
 
-              {/* <hr className="verticalLine" /> */}
-
               <div id="kano">
                 Kano Marvel
                 <br />
@@ -73,8 +64,6 @@ class Credits extends React.Component {
                 </a>
                 <br />
               </div>
-
-              {/* <hr className="verticalLine" /> */}
 
               <div id="chelsea">
                 Chelsea White
@@ -100,8 +89,6 @@ class Credits extends React.Component {
                   LinkedIn
                 </a>
               </div>
-
-              {/* <hr className="verticalLine" /> */}
 
               <div id="givon">
                 Givon Dickeron

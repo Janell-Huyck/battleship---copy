@@ -1,8 +1,3 @@
-// these "ship" components are for use in the setup board page for
-//these "ship" components are for the setup board's
-//graphical drawings and for the play game page, to display the player's
-//own ships on their half of the board
-
 import React from "react";
 import cruiserHorizontal from "../../../Battleship-image/ships/horizShip2.png";
 import cruiserVertical from "../../../Battleship-image/ships/vertShip2.png";

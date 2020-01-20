@@ -9,7 +9,6 @@ class OpponentBoardGrid extends React.Component {
   label = "";
   newRow = [];
   newBoard = [];
-  //use nested loops to define the Opponent divs
   rowLabels = [" ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
   targetRow = null;
   targetColumn = null;
@@ -48,11 +47,9 @@ class OpponentBoardGrid extends React.Component {
   };
 
   render() {
-    //emptying newBoard and newRow so it doesn't infinitely add to itself on changes to state
     this.newBoard = [];
     this.newRow = [];
     let newSquare = "";
-    //first, draw the header row
 
     for (let headerRowLabels = 0; headerRowLabels <= 10; headerRowLabels++) {
       if (headerRowLabels === 0) {
@@ -66,7 +63,6 @@ class OpponentBoardGrid extends React.Component {
 
     this.newBoard.push(this.drawRow(this.newRow, "header"));
 
-    //then draw the rest of the rows
     for (let row = 1; row <= 10; row++) {
       this.newRow = [];
       for (let column = 0; column <= 10; column++) {
@@ -92,8 +88,6 @@ const mapStateToProps = state => {
     torpedoMessage: state.play.addCoordinates.result
       ? state.play.addCoordinates.result
       : null,
-    //playerName
-    //the board
     playerName: state.auth.login.result.username,
     theBoard: state.manipulateBoards.startBoard.result
   };

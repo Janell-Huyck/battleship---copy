@@ -1,4 +1,3 @@
-//checkReady state reducer
 import { CHECKREADYSTART } from "../../actionTypes";
 import { withAsyncReducer } from "../../HORs";
 

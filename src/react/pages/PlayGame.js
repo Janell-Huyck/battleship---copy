@@ -1,25 +1,15 @@
-//this page is where the game is played, once the setup is complete
-
 import React from "react";
-// import { Menu } from "../components";
 import "./PlayGame.css";
 import {
   OpponentBoard,
   PlayerBoard,
   SurrenderButton
-  // FireButton
-  // TurnHandler
 } from "../components/playGame";
 import { connect } from "../HOCs";
 import board from "../components/setUpBoard/whereDoTheShipsLive";
 import { startBoard, getOldMessages } from "../../redux/index";
 
 class PlayGame extends React.Component {
-  state = {
-    // hitAddress: [],
-    // missAddress: []
-  };
-
   componentDidMount = () => {
     this.findOpponentShipCoordinates();
   };
@@ -53,33 +43,14 @@ class PlayGame extends React.Component {
     } else return "playerA";
   };
 
-  // returnDecision = (msg, address) => {
-  //   if (msg === "Hit") {
-  //     this.setState({
-  //       hitAddress: this.state.hitAddress.concat(address)
-  //     });
-  //   } else {
-  //     this.setState({
-  //       missAddress: this.state.missAddress.concat(address)
-  //     });
-  //   }
-  // };
-
   render() {
     return (
       <React.Fragment>
-        {/* <Menu /> */}
-        {/* <TurnHandler /> */}
         <div className="twoBoards">
           <PlayerBoard />
-          <OpponentBoard
-            hitAddress={this.state.hitAddress}
-            missAddress={this.state.missAddress}
-          />
+          <OpponentBoard />
         </div>
         <SurrenderButton />
-
-        {/* <FireButton returnDecision={this.returnDecision} /> */}
       </React.Fragment>
     );
   }

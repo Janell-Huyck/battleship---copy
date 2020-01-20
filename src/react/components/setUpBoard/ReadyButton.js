@@ -1,9 +1,3 @@
-//this button shows up on the main setup board page, next to the
-//ClearBoard button, and is used to confirm and post the board
-//during initial setup.
-//suggest you use "mapStateToProps" to get the locations
-//and "connect" along with "withAsyncAction" when exporting
-
 import React from "react";
 import { connect, withAsyncAction } from "../../HOCs";
 import { Redirect } from "../index";
@@ -129,19 +123,14 @@ class ReadyButton extends React.Component {
 
   startCheckingForOpponentReady = () => {
     this.interval = setInterval(() => {
-      // console.log("checking opponent readiness");
       this.checkReadyPlay();
     }, 2000);
   };
 
   checkReadyPlay = () => {
-    // console.log("checkReadyPlay has been called");
-    // console.log("opponent name is " + this.state.opponentName);
-    // console.log("playerName is " + this.props.playerName);
     this.props.fetchLastMessage(this.state.opponentName).then(result => {
       result.payload.messages.map(message => {
         if (!message.text.includes("start")) {
-          // console.log("player is ready");
           return this.redirectToPlayGame();
         } else return false;
       });
@@ -150,20 +139,15 @@ class ReadyButton extends React.Component {
 
   redirectToPlayGame = () => {
     this.props.getOldMessages(this.state.opponentName);
-    // console.log("redirecting to /play");
     this.setState({ redirect: true });
   };
 
   handleClick = () => {
-    // console.log(this.props.gameNumber);
-    // console.log("ReadyButton was clicked.");
     if (this.verifyAllShipsPlaced() === false) {
       return;
     }
     this.setState({ playerReady: true });
     this.props.postMessage({ text: `Game ${this.props.gameNumber} ready` });
-    // this.props.postMessage({ text: " ready" });
-
     this.startCheckingForOpponentReady();
   };
 

@@ -5,9 +5,6 @@ import { fireTorpedo, startBoard } from "../../../redux/index";
 import { boards } from "../setUpBoard";
 import { checkForWin } from "./checkForWin";
 import { WaitScreen } from "../waitScreen/";
-//get the last cell clicked from the oppenent board
-// check state to see if player guess hit enemy ship
-//send a message to the turnHandler that a turn has been taken
 
 class FireButton extends React.Component {
   state = {
@@ -26,14 +23,14 @@ class FireButton extends React.Component {
 
   FireTorpedo = event => {
     if (this.props.TargetCell === null) {
-      alert("please choose coordinates by clicking on your opponent's board");
+      // alert("please choose coordinates by clicking on your opponent's board");
     } else {
       this.props.fireTorpedo({
         text:
           "Game " + this.props.gameNumber + " torpedo " + this.props.TargetCell
       });
       boards[this.opponentName][this.props.TargetCell].torpedo = true;
-      // console.log("Torpedo " + this.props.TargetCell + " Fired!");
+
       if (checkForWin(boards[this.opponentName]) === true) {
         this.setState({ didPlayerWin: true });
       } else {
@@ -68,7 +65,6 @@ class FireButton extends React.Component {
           }
         }
       }
-      // this.checkStateForHitMarkers(this.props.TargetCell);
     }
   };
 
@@ -105,7 +101,6 @@ const mapStateToProps = state => {
   };
 };
 
-// export default FireButton;
 const mapDispatchToProps = {
   fireTorpedo,
   startBoard

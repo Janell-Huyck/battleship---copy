@@ -1,26 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
-// import { withAsyncAction } from "../../../HOCs";
 import { OpponentBoardGrid } from ".";
 import { checkForLose } from "../checkForLose";
 import { WaitScreen } from "../../waitScreen";
-// import { postMessage } from "../../../../redux/index";
 import {
   addCoordinates,
   fetchLastMessage,
   startBoard
 } from "../../../../redux/index";
 import { FireButton } from "../index";
-// import board from "../../setUpBoard/whereDoTheShipsLive";
-
-// import {addCoordinates} from "../../../../redux/index"
 
 class OpponentBoard extends React.Component {
   state = {
     opponentTurn: false,
     waitMessage: "Waiting for your opponent to take a turn...",
     winMessage: "Congratulations!  You won!  Your opponent has surrendered.",
-    // opponentTorpedoCoordinates: "",
     TargetCell: "",
     opponentName: "",
     playerHasWon: false,
@@ -63,32 +57,18 @@ class OpponentBoard extends React.Component {
   startWaitingForOpponent = () => {};
 
   checkOpponentTurn = () => {
-    // console.log("tick");
     if (this.state.opponentTurn === false) {
       return;
     }
-    // console.log(
-    //   "opponent name that we're looking for torpedos is " +
-    //     this.state.opponentName
-    // );
     this.props.fetchLastMessage(this.state.opponentName).then(result => {
       let opponentTorpedoCoordinates = result.payload.messages[0].text
         .split(" ")
         .slice(-1);
-      // console.log(
-      //   "last word of last message from opponent is:  " +
-      //     opponentTorpedoCoordinates
-      // );
-      //check game #
       let messageGameNumber = result.payload.messages[0].text
         .split(" ")
         .slice(1, 2);
-      // console.log(" opponent message game number is " + messageGameNumber);
-      // console.log("props gameNumber is " + this.props.gameNumber);
       if (messageGameNumber && this.props.gameNumber) {
         if (messageGameNumber.toString() === this.props.gameNumber.toString()) {
-          // console.log("same game number found");
-
           if (result.payload.messages[0].text.includes("surrender")) {
             this.setState({ playerHasWon: true });
           }
@@ -96,28 +76,19 @@ class OpponentBoard extends React.Component {
             let torpedoStatus = this.props.board[this.props.playerName][
               opponentTorpedoCoordinates
             ].torpedo;
-            // console.log(
-            //   "torpedo status for opponent board coordinates: " + torpedoStatus
-            // );
             if (torpedoStatus === false) {
               this.props.board[this.props.playerName][
                 opponentTorpedoCoordinates
               ].torpedo = true;
               this.props.startBoard(this.props.board);
-              //kano lose conditions pt 1/2//
               this.checkForPlayerLoss(this.props.board);
-              //end kano lose conditions pt 1/2//
+
               this.toggleTurn();
             }
           }
         }
       }
     });
-  };
-
-  getOpponentTorpedoMessage = () => {
-    // return this.props.torpedoMessage;
-    //chelsea's function
   };
 
   toggleTurn = () => {
@@ -129,33 +100,39 @@ class OpponentBoard extends React.Component {
   };
 
   clickHandler = event => {
-    this.setState({ TargetCell: event.target.innerHTML });
-    this.props.addCoordinates(event.target.innerHTML);
-    this.startWaitingForOpponent();
+    if (this.checkThatNoTorpedoHasBeenFiredHere(event.target.innerHTML)) {
+      this.setState({ TargetCell: event.target.innerHTML });
+      this.props.addCoordinates(event.target.innerHTML);
+      this.startWaitingForOpponent();
+    }
+  };
+
+  checkThatNoTorpedoHasBeenFiredHere = gridSquare => {
+    if (
+      this.props.board[this.state.opponentName][gridSquare].torpedo === false
+    ) {
+      return true;
+    }
+    return false;
   };
 
   handleFireButtonClick = () => {
-    // console.log(this.props.TargetCell);
     if (this.state.TargetCell) {
       console.log("we have a target cell " + this.state.TargetCell);
       this.checkStateForHitMarkers(this.props.TargetCell);
-      this.setState({ opponentTurn: true });
+      this.setState({ opponentTurn: true, TargetCell: "" });
     } else {
-      // console.log("we do not have a target cell");
+      alert("Please select a torpedo destination before hitting 'Fire' ");
     }
   };
 
   checkStateForHitMarkers(cellToCheck) {
-    // console.log(this.props.board[this.state.opponentName][cellToCheck].ship);
     if (this.props.board[this.state.opponentName][cellToCheck].ship === null) {
       alert("Miss");
       this.returnDecision("Miss", cellToCheck);
-      //we also want to put a miss token in the appropriate div
     } else {
       alert("HIT!");
       this.returnDecision("Hit", cellToCheck);
-      //check for sinkage (another function)
-      //we need to put a hit token in the appropriate div
     }
   }
 
@@ -164,12 +141,10 @@ class OpponentBoard extends React.Component {
       this.setState({
         hitAddress: this.state.hitAddress.concat(cellToCheck)
       });
-      // console.log(this.state.hitAddress);
     } else {
       this.setState({
         missAddress: this.state.missAddress.concat(cellToCheck)
       });
-      // console.log(this.state.missAddress);
     }
   };
 
@@ -240,7 +215,6 @@ class OpponentBoard extends React.Component {
             <FireButton returnDecision={this.returnDecision} />
           </div>
         </div>
-        {/* <button onClick={this.toggleTurn}>Toggle turn</button> */}
       </React.Fragment>
     );
   }
@@ -256,9 +230,6 @@ const mapStateToProps = state => {
         ? state.play.fireTorpedo.result.message
         : null,
 
-      // opponentTorpedoCoordinates: state.play.fireTorpedo.result
-      //   ? state.play.fireTorpedo.result.message.text
-      //   : null,
       TargetCell: state.play.addCoordinates.result
         ? state.play.addCoordinates.result
         : null,
@@ -272,7 +243,6 @@ const mapStateToProps = state => {
   } else return {};
 };
 
-// export default OpponentBoard;
 const mapDispatchToProps = { addCoordinates, fetchLastMessage, startBoard };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OpponentBoard);

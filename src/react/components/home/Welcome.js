@@ -1,4 +1,3 @@
-//this is the main welcome screen, where the player can either start or join a game
 import React from "react";
 
 import { CreateGameButton, JoinGameForm } from ".";

@@ -1,4 +1,3 @@
-// post a single message.  text: XXXX + words/message, where XXXX = game number
 import { domain, jsonHeaders, handleJsonResponse } from "./constants";
 import {
   POSTMESSAGE,
@@ -8,9 +7,6 @@ import {
 } from "../actionTypes";
 
 const url = domain + "/messages";
-// const token = JSON.parse(localStorage.login).result.token;
-
-//battleship-capstone-api.herokuapp.com/messages
 
 export const postMessage = messageData => (dispatch, getState) => {
   dispatch({
@@ -57,8 +53,6 @@ export const fetchLastMessage = playerName => dispatch => {
 };
 
 export const deleteMessage = (messageId, token) => dispatch => {
-  // const token = getState().auth.login.result.token;
-
   dispatch({
     type: DELETEMESSAGE.START
   });
