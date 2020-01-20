@@ -206,7 +206,6 @@ class OpponentBoard extends React.Component {
             <FireButton returnDecision={this.returnDecision} />
           </div>
         </div>
-        {/* <button onClick={this.toggleTurn}>Toggle turn</button> */}
       </React.Fragment>
     );
   }
