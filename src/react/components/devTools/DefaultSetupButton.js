@@ -55,4 +55,4 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = { deleteMessage, getOldMessages };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DefaultSetupbutton);
+export default connect(mapStateToProps, mapDispatchToProps)(DefaultSetupButton);
