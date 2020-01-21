@@ -20,27 +20,26 @@
   background-color: var(--battleshipNavy);
 }
 
-.hitBoardSquare {
-  background-color: red;
-  border-radius: 50%;
+
+.hitOrMissToken {
   --squareSize: 6vh;
-  width: var(--squareSize);
-  height: var(--squareSize);
-  text-align: center;
-  position: relative;
-  z-index: 1;
+  width: calc(var(--squareSize) / 2);
+  height: calc(var(--squareSize) / 2);
+  position: absolute;
+  z-index: 3;
   overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(50%, -40%);
 }
 
-.missBoardSquare {
-  background-color: white;
-  border-radius: 50%;
+.tokenSpan {
   --squareSize: 6vh;
   width: var(--squareSize);
   height: var(--squareSize);
   text-align: center;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   overflow: hidden;
 }
 
