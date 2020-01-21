@@ -11,7 +11,8 @@ import {
   selectShip,
   postMessage,
   getOldMessages,
-  startBoard
+  startBoard,
+  fetchLastMessage
 } from "../../../redux/index";
 import { boards } from "../setUpBoard";
 
@@ -43,11 +44,16 @@ class DefaultSetupButton extends React.Component {
       startCoordinates: ["E1", "E2"]
     },
     opponentName: "",
-    redirect: false
+    redirect: false,
+    playerReady: false
   };
 
   componentDidMount = () => {
     this.determineOpponentName();
+  };
+
+  componentWillUnmount = () => {
+    clearInterval(this.interval);
   };
 
   determineOpponentName = () => {
@@ -58,32 +64,22 @@ class DefaultSetupButton extends React.Component {
     }
   };
 
-  //   findSegmentPositions = (length, startCoordinates) => {
-  //     let targetRow = startCoordinates.slice(0, 1);
-  //     let targetColumn = startCoordinates.slice(1);
-
-  //     let positionArray = [];
-  //     for (let shipSegment = 0; shipSegment < length; shipSegment++) {
-  //       positionArray.push(targetRow + (targetColumn * 1 + shipSegment));
-  //     }
-  //     return positionArray;
-  //   };
-
   placeShip = ship => {
     const postMessage = this.props.postMessage;
     const gameNumber = this.props.gameNumber;
     const playerName = this.props.playerName;
     const startBoard = this.props.startBoard;
+    const shipToPlace = ship.name;
+    const shipCoordinates = ship.startCoordinates;
     const placeBattleship = this.props.placeBattleship;
     const placeCarrier = this.props.placeCarrier;
     const placeCruiser = this.props.placeCruiser;
     const placeDestroyer = this.props.placeDestroyer;
     const placeSubmarine = this.props.placeSubmarine;
     console.log("game number is " + gameNumber);
-    // may not be able to access "ship" on line 50 or 52
+
+    //post the messages on API for each coordinate
     for (let i = 0; i < ship.length; i++) {
-      //   ship.startCoordinates.forEach(
-      //   function(coordinate) {
       postMessage({
         text: `Game ${gameNumber} ${ship.name} ${ship.startCoordinates[i]}`
       });
@@ -91,24 +87,28 @@ class DefaultSetupButton extends React.Component {
       console.log("ship coordinates are " + ship.startCoordinates);
       startBoard(boards);
     }
-    //   switch (ship) {
-    //     case ship.name === "battleship":
-    //       console.log("placing battleship positions");
-    //       placeBattleship(ship.startCoordinates);
-    //     case "carrier":
-    //       placeCarrier(ship.startCoordinates);
-    //     case "cruiser":
-    //       placeCruiser(ship.startCoordinates);
-    //     case "destroyer":
-    //       placeDestroyer(ship.startCoordinates);
-    //     case "submarine":
-    //       placeSubmarine(ship.startCoordinates);
-    //     default:
-    //       alert("No ship selected");
+
+    //set the redux layer for your ships on your playerboard
+    switch (shipToPlace) {
+      case "battleship":
+        placeBattleship(shipCoordinates);
+        break;
+      case "carrier":
+        placeCarrier(shipCoordinates);
+        break;
+      case "cruiser":
+        placeCruiser(shipCoordinates);
+        break;
+      case "destroyer":
+        placeDestroyer(shipCoordinates);
+        break;
+      case "submarine":
+        placeSubmarine(shipCoordinates);
+        break;
+      default:
+        alert("No ship selected");
+    }
   };
-  //     });
-  // );
-  //   };
 
   defaultStart = () => {
     this.placeShip(this.state.battleship);
@@ -116,6 +116,32 @@ class DefaultSetupButton extends React.Component {
     this.placeShip(this.state.cruiser);
     this.placeShip(this.state.destroyer);
     this.placeShip(this.state.submarine);
+    this.setState({ playerReady: true });
+    this.props.postMessage({ text: `Game ${this.props.gameNumber} ready` });
+    this.startCheckingForOpponentReady();
+  };
+
+  startCheckingForOpponentReady = () => {
+    this.interval = setInterval(() => {
+      if (this.checkReadyPlay()) {
+        this.redirectToPlayGame();
+      }
+    }, 2000);
+  };
+
+  checkReadyPlay = () => {
+    this.props.getOldMessages(this.state.opponentName).then(result => {
+      result.payload.messages.map(message => {
+        console.log("game number is " + this.props.gameNumber);
+        return (
+          message.text.includes("ready") &&
+          message.text.includes(this.props.gameNumber)
+        );
+      });
+    });
+  };
+
+  redirectToPlayGame = () => {
     this.props.getOldMessages(this.state.opponentName);
     this.setState({ redirect: true });
   };
@@ -168,7 +194,8 @@ const mapDispatchToProps = {
   selectShip,
   postMessage,
   getOldMessages,
-  startBoard
+  startBoard,
+  fetchLastMessage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DefaultSetupButton);

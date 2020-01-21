@@ -3,13 +3,25 @@ import { connect } from "react-redux";
 import { withAsyncAction } from "../../../HOCs";
 import InitialBoardGrid from "./InitialBoardGrid";
 import { ClearBoardButton, ReadyButton } from "../index";
+import { Redirect } from "../../index";
 
 class InitialBoard extends React.Component {
+  state = {
+    redirectToDev: false
+  };
+
   newBoard = [];
   newRow = [];
   label = "";
 
+  devToolsButton = () => {
+    return this.setState({ redirectToDev: true });
+  };
+
   render() {
+    if (this.state.redirectToDev === true) {
+      return <Redirect to="/dev" />;
+    }
     return (
       <React.Fragment>
         <div className="newBoard">
@@ -17,6 +29,7 @@ class InitialBoard extends React.Component {
         </div>
         <ClearBoardButton />
         <ReadyButton />
+        <button onClick={this.devToolsButton}>Go To Dev Tools</button>
       </React.Fragment>
     );
   }
