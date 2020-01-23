@@ -1,5 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
+import {
+  placeBattleship,
+  placeCarrier,
+  placeCruiser,
+  placeDestroyer,
+  placeSubmarine,
+  startBoard
+} from "../../../redux/index";
+import { boards } from "."; //the big long array of possible locations
+import { blankBoardForRedux } from ".";
 
 class RandomSetupButton extends React.Component {
   battleship = {
@@ -56,6 +66,7 @@ class RandomSetupButton extends React.Component {
   };
 
   clickHandler = () => {
+    this.resetReduxBoard();
     //for each ship:
     for (
       let whichShipInArray = 0;
@@ -63,17 +74,20 @@ class RandomSetupButton extends React.Component {
       whichShipInArray++
     ) {
       let shipToPlace = this.shipArray[whichShipInArray];
+      shipToPlace.orientation = "";
+      shipToPlace.coordinates = [];
       this.generateCoordinates(shipToPlace);
-
-      //if it is a legal move, set my redux state to reflect it
-      //   (important so i don't overlap other ships)
+      this.placeShipInRedux(shipToPlace); //place in redux with new coordinates.
     }
-
-    //once all ships are placed, send the ship messages
-    //send a "ready" message
-    //start an interval and start checking for opponent ready
-    //toggle the waiting screen
-    //once the opponent has sent messages, redirect to the playgame screen
+  };
+  resetReduxBoard = () => {
+    for (let [key, value] of Object.entries(boards.playerA)) {
+      value.ship = null;
+    }
+    for (let [key, value] of Object.entries(boards.playerB)) {
+      value.ship = null;
+    }
+    this.props.startBoard(boards);
   };
 
   generateCoordinates = ship => {
@@ -86,8 +100,6 @@ class RandomSetupButton extends React.Component {
         return ship;
       }
     }
-    //if it's not on the board or if it overlaps,
-    //then generate another start coordinate and orientation.
     this.generateCoordinates(ship);
   };
 
@@ -106,13 +118,22 @@ class RandomSetupButton extends React.Component {
   };
 
   doCoordinatesOverlapOtherShips = ship => {
-    //    check each coordinate against redux
-    //       if it's != null,
-    //          then a ship is already there.
-    //
-    console.log(
-      "pretending to check against redux layer.  assuming no overlap"
-    );
+    for (
+      let coordinateChecked = 0;
+      coordinateChecked < ship.length;
+      coordinateChecked++
+    ) {
+      let reduxSquare = this.props.board[this.props.playerName][
+        ship.coordinates[coordinateChecked]
+      ].ship;
+      console.log(reduxSquare);
+
+      if (reduxSquare !== null) {
+        console.log("found a ship at " + ship.coordinates[coordinateChecked]);
+        return true;
+      }
+    }
+    console.log("no overlap found");
     return false;
   };
 
@@ -154,6 +175,49 @@ class RandomSetupButton extends React.Component {
     return true;
   };
 
+  placeShipInRedux = ship => {
+    const startBoard = this.props.startBoard;
+    const shipName = ship.name;
+    const playerName = this.props.playerName;
+    const position = {
+      orientation: ship.orientation,
+      coordinates: ship.coordinates
+    };
+
+    //place the ships in the actual redux layer
+    for (
+      let coordinateToPlace = 0;
+      coordinateToPlace < ship.coordinates.length;
+      coordinateToPlace++
+    ) {
+      let coordinate = ship.coordinates[coordinateToPlace];
+      boards[playerName][coordinate].ship = shipName;
+    }
+    startBoard(boards);
+
+    //place the active ship status for <availableShips> to function until it's reworked
+    switch (ship.name) {
+      case "battleship":
+        this.props.placeBattleship(position);
+
+        break;
+      case "carrier":
+        this.props.placeCarrier(position);
+        break;
+      case "cruiser":
+        this.props.placeCruiser(position);
+        break;
+      case "destroyer":
+        this.props.placeDestroyer(position);
+        break;
+      case "submarine":
+        this.props.placeSubmarine(position);
+        break;
+      default:
+        console.log("we goofed up - i cannot place this ship in redux");
+    }
+  };
+
   render() {
     return (
       <button onClick={this.clickHandler}>
@@ -166,33 +230,20 @@ class RandomSetupButton extends React.Component {
 const mapStateToProps = state => {
   if (state.auth.login.result) {
     return {
-      // playerName: state.auth.login.result.username,
-      // token: state.auth.login.result.token,
-      // torpedoMessage: state.play.fireTorpedo.result
-      //   ? state.play.fireTorpedo.result.message
-      //   : null,
-      // TargetCell: state.play.addCoordinates.result
-      //   ? state.play.addCoordinates.result
-      //   : null,
-      // board: state.manipulateBoards.startBoard.result,
-      // gameNumber: state.welcome.startGame.result
-      //   ? state.welcome.startGame.result.message.text.slice(5, 9)
-      //   : undefined
+      playerName: state.auth.login.result.username,
+      board: state.manipulateBoards.startBoard.result,
+      battleshipPosition: state.setUpGame.placeBattleship.result
     };
   } else return {};
 };
 
 const mapDispatchToProps = {
-  // placeBattleship,
-  // placeCarrier,
-  // placeCruiser,
-  // placeDestroyer,
-  // placeSubmarine,
-  // selectShip,
-  // postMessage,
-  // getOldMessages,
-  // startBoard,
-  // fetchLastMessage
+  placeBattleship,
+  placeCarrier,
+  placeCruiser,
+  placeDestroyer,
+  placeSubmarine,
+  startBoard
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RandomSetupButton);
