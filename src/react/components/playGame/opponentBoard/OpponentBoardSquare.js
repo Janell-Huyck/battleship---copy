@@ -21,7 +21,7 @@ export default function OpponentBoardSquare(props) {
   };
   return (
     <React.Fragment>
-      <span className="tokenSpan">{handleDisplay()}</span>
+      {handleDisplay()}
       <button className={nameOfClass} onClick={props.onClick} key={props.value}>
         {props.value}
       </button>
