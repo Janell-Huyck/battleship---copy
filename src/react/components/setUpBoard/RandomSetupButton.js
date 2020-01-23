@@ -1,10 +1,55 @@
 import React from "react";
-import { Redirect } from "..";
 import { connect } from "react-redux";
-import { Battleship, Carrier, Cruiser, Destroyer, Submarine } from "../ships";
 
 class RandomSetupButton extends React.Component {
-  shipArray = [Battleship, Carrier, Cruiser, Destroyer, Submarine];
+  battleship = {
+    name: "battleship",
+    length: 4,
+    orientation: "",
+    coordinates: [],
+    row: 0,
+    column: 0
+  };
+  carrier = {
+    name: "carrier",
+    length: 5,
+    orientation: "",
+    coordinates: [],
+    row: 0,
+    column: 0
+  };
+  cruiser = {
+    name: "cruiser",
+    length: 3,
+    orientation: "",
+    coordinates: [],
+    row: 0,
+    column: 0
+  };
+  destroyer = {
+    name: "destroyer",
+    length: 2,
+    orientation: "",
+    coordinates: [],
+    row: 0,
+    column: 0
+  };
+  submarine = {
+    name: "submarine",
+    length: 3,
+    orientation: "",
+    coordinates: [],
+    row: 0,
+    column: 0
+  };
+
+  shipArray = [
+    this.battleship,
+    this.carrier,
+    this.cruiser,
+    this.destroyer,
+    this.submarine
+  ];
 
   componentWillUnmount = () => {
     //clear this.interval()  (check syntax)
@@ -17,15 +62,13 @@ class RandomSetupButton extends React.Component {
       whichShipInArray < this.shipArray.length;
       whichShipInArray++
     ) {
-      this.generateLegalCoordinates(this.shipArray[whichShipInArray]);
+      let shipToPlace = this.shipArray[whichShipInArray];
+      this.generateCoordinates(shipToPlace);
+
       //if it is a legal move, set my redux state to reflect it
       //   (important so i don't overlap other ships)
-      // setState to indicate that the ship has been placed??
-      //
-      //  if (coordinate is illegal) {call this same function again}
-      //
-      //if it is not a legal move, select another random coordinate and repeat the checks
     }
+
     //once all ships are placed, send the ship messages
     //send a "ready" message
     //start an interval and start checking for opponent ready
@@ -33,54 +76,89 @@ class RandomSetupButton extends React.Component {
     //once the opponent has sent messages, redirect to the playgame screen
   };
 
-  generateLegalCoordinates = ship => {
-    let rowHeaders = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-    let orientation = "";
-    let row = "";
-    let column = "";
-    let coordinate = "";
-
-    console.log("the ship for the legal coordinates is " + ship);
-
-    //generate random coordinates
-    row = rowHeaders[Math.floor(Math.random() * 10)];
-    column = this.Math.floor(Math.random() * 10) + 1;
-    coordinate = row + column;
-    console.log("random coordinate to test is: " + coordinate);
-
-    //generate random orientation
-    if (Math.floor(Math.random()) === 1) {
-      orientation = "vertical";
-      console.log("math.floor was 1.  setting orientatin to vertical");
-    } else {
-      orientation = "horizontal";
-      console.log(
-        "math.floor was not equal to 1.  setting orientation to horizontal."
-      );
+  generateCoordinates = ship => {
+    ship.coordinates = [];
+    this.generateRandomStartCoordinate(ship);
+    this.generateRandomStartOrientation(ship);
+    if (this.checkCoordinatesAreOnBoard(ship) === true) {
+      if (this.doCoordinatesOverlapOtherShips(ship) === false) {
+        console.log(ship.name + ": " + ship.coordinates);
+        return ship;
+      }
     }
+    //if it's not on the board or if it overlaps,
+    //then generate another start coordinate and orientation.
+    this.generateCoordinates(ship);
+  };
 
-    this.checkIfCoordinateIsLegal(ship, coordinate, orientation);
-    //check if coordinate is a legal move
-    //    generate what the coordinates would be
+  generateRandomStartCoordinate = ship => {
+    ship.row = Math.floor(Math.random() * 10);
+    ship.column = Math.floor(Math.random() * 10) + 1;
+  };
+
+  generateRandomStartOrientation = ship => {
+    let randomOrientation = Math.floor(Math.random() * 2);
+    if (randomOrientation === 1) {
+      ship.orientation = "vertical";
+    } else {
+      ship.orientation = "horizontal";
+    }
+  };
+
+  doCoordinatesOverlapOtherShips = ship => {
     //    check each coordinate against redux
-    //        if the coordinate itself is null/undefined, you're out of bounds
-    //        if the coordinate exists, check the .ship status.  if it's != null,
+    //       if it's != null,
     //          then a ship is already there.
+    //
+    console.log(
+      "pretending to check against redux layer.  assuming no overlap"
+    );
+    return false;
   };
 
-  checkIfCoordinateIsLegal = (ship, coordinate, orientation) => {
+  checkCoordinatesAreOnBoard = ship => {
+    let rowHeaders = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+    console.log("ship name is " + ship.name);
+    console.log("ship orientation is " + ship.orientation);
     console.log(
-      "checking ship/coordinate/orientation: " +
-        ship +
-        " " +
-        coordinate +
-        " " +
-        orientation
+      "starting numbers are row " +
+        rowHeaders[ship.row] +
+        " column " +
+        ship.column
     );
+    for (
+      let coordinateCounter = 0;
+      coordinateCounter < ship.length;
+      coordinateCounter++
+    ) {
+      if (ship.orientation === "horizontal") {
+        if (ship.column + coordinateCounter <= 10) {
+          ship.coordinates.push(
+            rowHeaders[ship.row] + (ship.column + coordinateCounter)
+          );
+        } else {
+          console.log("exceeded available columns.");
+          return false;
+        }
+      } else {
+        if (ship.row + coordinateCounter < 10) {
+          ship.coordinates.push(
+            rowHeaders[ship.row + coordinateCounter] + ship.column
+          );
+        } else {
+          console.log("exceeded available rows.");
+          return false;
+        }
+      }
+    }
+    return true;
   };
+
   render() {
     return (
-      <button onClick={this.clickHandler}>Click To Place Random Ships</button>
+      <button onClick={this.clickHandler}>
+        Quick-Start (random placement)
+      </button>
     );
   }
 }
@@ -88,22 +166,18 @@ class RandomSetupButton extends React.Component {
 const mapStateToProps = state => {
   if (state.auth.login.result) {
     return {
-      playerName: state.auth.login.result.username,
-      token: state.auth.login.result.token,
-
-      torpedoMessage: state.play.fireTorpedo.result
-        ? state.play.fireTorpedo.result.message
-        : null,
-
-      TargetCell: state.play.addCoordinates.result
-        ? state.play.addCoordinates.result
-        : null,
-
-      board: state.manipulateBoards.startBoard.result,
-
-      gameNumber: state.welcome.startGame.result
-        ? state.welcome.startGame.result.message.text.slice(5, 9)
-        : undefined
+      // playerName: state.auth.login.result.username,
+      // token: state.auth.login.result.token,
+      // torpedoMessage: state.play.fireTorpedo.result
+      //   ? state.play.fireTorpedo.result.message
+      //   : null,
+      // TargetCell: state.play.addCoordinates.result
+      //   ? state.play.addCoordinates.result
+      //   : null,
+      // board: state.manipulateBoards.startBoard.result,
+      // gameNumber: state.welcome.startGame.result
+      //   ? state.welcome.startGame.result.message.text.slice(5, 9)
+      //   : undefined
     };
   } else return {};
 };
