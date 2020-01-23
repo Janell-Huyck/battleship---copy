@@ -20,29 +20,129 @@
   background-color: var(--battleshipNavy);
 }
 
-.hitBoardSquare {
-  background-color: red;
-  border-radius: 50%;
+.horizShip1{
   --squareSize: 6vh;
-  width: var(--squareSize);
-  height: var(--squareSize);
-  text-align: center;
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
+ height: var(--squareSize);
+ width: calc(var(--squareSize)*2);
+ position: absolute;
+ z-index: 2;
+ margin: 0;
+ border: 0;
+ padding: 0;
 }
 
-.missBoardSquare {
-  background-color: white;
-  border-radius: 50%;
-  --squareSize: 6vh;
-  width: var(--squareSize);
-  height: var(--squareSize);
-  text-align: center;
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
+.vertShip1{
+ --squareSize: 6vh;
+width: var(--squareSize);
+height: calc(var(--squareSize)*2);
+position: absolute;
+z-index: 2;
+margin: 0;
+border: 0;
+padding: 0;
 }
+
+.horizShip2{
+  --squareSize: 6vh;
+ height: var(--squareSize);
+ width: calc(var(--squareSize)*3);
+ position: absolute;
+ z-index: 2;
+ margin: 0;
+ border: 0;
+ padding: 0;
+}
+
+.vertShip2{
+ --squareSize: 6vh;
+width: var(--squareSize);
+height: calc(var(--squareSize)*3);
+position: absolute;
+z-index: 2;
+margin: 0;
+border: 0;
+padding: 0;
+}
+
+.horizShip3{
+  --squareSize: 6vh;
+ height: var(--squareSize);
+ width: calc(var(--squareSize)*3);
+ position: absolute;
+ z-index: 2;
+ margin: 0;
+ border: 0;
+ padding: 0;
+}
+
+.vertShip3{
+ --squareSize: 6vh;
+width: var(--squareSize);
+height: calc(var(--squareSize)*3);
+position: absolute;
+z-index: 2;
+margin: 0;
+border: 0;
+padding: 0;
+}
+
+.horizShip4{
+   --squareSize: 6vh;
+  height: var(--squareSize);
+  width: calc(var(--squareSize)*4);
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.vertShip4{
+  --squareSize: 6vh;
+ width: var(--squareSize);
+ height: calc(var(--squareSize)*4);
+ position: absolute;
+ z-index: 2;
+ margin: 0;
+ border: 0;
+ padding: 0;
+}
+.horizShip5{
+  --squareSize: 6vh;
+ height: var(--squareSize);
+ width: calc(var(--squareSize)*5);
+ position: absolute;
+ z-index: 2;
+ margin: 0;
+ border: 0;
+ padding: 0;
+}
+
+.vertShip5{
+ --squareSize: 6vh;
+width: var(--squareSize);
+height: calc(var(--squareSize)*5);
+position: absolute;
+z-index: 2;
+margin: 0;
+border: 0;
+padding: 0;
+}
+
+.hitOrMissToken {
+  --squareSize: 6vh;
+  width: calc(var(--squareSize) / 2);
+  height: calc(var(--squareSize) / 2);
+  /* position: absolute; */
+  z-index: 3;
+  overflow: hidden;
+  /* top: 50%;
+  left: 50%; */
+  position: absolute;
+  transform: translate(50%, 50%);
+}
+
+
 
 .shipsAvailable {
   display: flex;
@@ -73,7 +173,7 @@
   --squareSize: 6vh;
   width: var(--squareSize);
   height: var(--squareSize);
-  background-color: var(--unsunkShip);
+  background-color: var(--battleshipNavy);
   color: var(--highLightText);
 }
 
