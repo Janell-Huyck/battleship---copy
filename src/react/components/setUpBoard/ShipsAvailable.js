@@ -1,6 +1,7 @@
 import React from "react";
 import { Battleship, Carrier, Cruiser, Destroyer, Submarine } from "../ships";
 import { connect, withAsyncAction } from "../../HOCs";
+import { RandomSetupButton } from ".";
 
 class ShipsAvailable extends React.Component {
   renderBattleship = () => {
@@ -156,6 +157,7 @@ class ShipsAvailable extends React.Component {
           {this.renderCruiser()}
           {this.renderDestroyer()}
         </div>
+        <RandomSetupButton />
       </React.Fragment>
     );
   }

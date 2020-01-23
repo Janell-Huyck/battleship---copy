@@ -1,9 +1,6 @@
 import React from "react";
 import "./PlayGame.css";
-import {
-  DeleteOldMessagesButton,
-  DefaultSetupButton
-} from "../components/devTools";
+import { DeleteOldMessagesButton } from "../components/devTools";
 import { connect } from "../HOCs";
 import { startBoard, getOldMessages } from "../../redux/index";
 
@@ -14,7 +11,6 @@ class DevTools extends React.Component {
     return (
       <React.Fragment>
         <DeleteOldMessagesButton />
-        <DefaultSetupButton />
       </React.Fragment>
     );
   }
