@@ -1,17 +1,13 @@
 import React from "react";
-
 import { connect } from "react-redux";
-import { fireTorpedo, startBoard } from "../../../redux/index";
+import { fireTorpedo, startBoard, postWinner } from "../../../redux/index";
 import { boards } from "../setUpBoard";
 import { checkForWin } from "./checkForWin";
-import { WaitScreen } from "../waitScreen/";
 
 class FireButton extends React.Component {
   state = {
     hitAddress: [],
     missAddress: [],
-    didPlayerWin: false,
-    didPlayerAcknowledgeWin: false,
     didPlayerSinkBattleship: false,
     didPlayerSinkCarrier: false,
     didPlayerSinkCruiser: false,
@@ -23,16 +19,16 @@ class FireButton extends React.Component {
 
   FireTorpedo = event => {
     if (this.props.TargetCell === null) {
-      // alert("please choose coordinates by clicking on your opponent's board");
     } else {
       this.props.fireTorpedo({
-        text:
-          "Game " + this.props.gameNumber + " torpedo " + this.props.TargetCell
+        text: this.props.gameNumber + " torpedo " + this.props.TargetCell
       });
       boards[this.opponentName][this.props.TargetCell].torpedo = true;
 
       if (checkForWin(boards[this.opponentName]) === true) {
-        this.setState({ didPlayerWin: true });
+        postWinner(this.props.playerName, {
+          text: this.props.gameNumber + " win"
+        });
       } else {
         if (!this.state.didPlayerSinkBattleship) {
           if (checkForWin(boards[this.opponentName]).includes("battleship")) {
@@ -69,13 +65,6 @@ class FireButton extends React.Component {
   };
 
   render() {
-    if (this.state.didPlayerWin) {
-      return (
-        <WaitScreen message="Congratulations! You sunk your opponent's fleet! You win!">
-          true
-        </WaitScreen>
-      );
-    }
     return (
       <button
         className={"fireButton"}
@@ -94,16 +83,15 @@ const mapStateToProps = state => {
     TargetCell: state.play.addCoordinates.result
       ? state.play.addCoordinates.result
       : null,
-    gameNumber: state.welcome.startGame.result
-      ? state.welcome.startGame.result.message.text.slice(5, 9)
-      : null,
+    gameNumber: state.welcome.gameNumber.result,
     board: state.manipulateBoards.startBoard.result
   };
 };
 
 const mapDispatchToProps = {
   fireTorpedo,
-  startBoard
+  startBoard,
+  postWinner
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FireButton);

@@ -1,6 +1,5 @@
 import React from "react";
 import { boards } from ".";
-import { blankBoardForRedux } from ".";
 import { connect } from "../../HOCs";
 
 class ClearBoardButton extends React.Component {
@@ -10,10 +9,10 @@ class ClearBoardButton extends React.Component {
   };
 
   resetReduxBoard = () => {
-    for (let [key, value] of Object.entries(boards.playerA)) {
+    for (let [, value] of Object.entries(boards.playerA)) {
       value.ship = null;
     }
-    for (let [key, value] of Object.entries(boards.playerB)) {
+    for (let [, value] of Object.entries(boards.playerB)) {
       value.ship = null;
     }
     this.props.startBoard(boards);

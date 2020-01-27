@@ -9,6 +9,7 @@ import {
 const url = domain + "/messages";
 
 export const postMessage = messageData => (dispatch, getState) => {
+  console.log("posting a message...");
   dispatch({
     type: POSTMESSAGE.START
   });

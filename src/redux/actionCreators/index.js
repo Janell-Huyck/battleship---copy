@@ -7,4 +7,4 @@ export * from "./manipulateBoards";
 export * from "./welcome";
 export * from "./waitScreen";
 export * from "./playGame";
-
+export * from "./winner";

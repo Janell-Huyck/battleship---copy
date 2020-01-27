@@ -61,7 +61,7 @@ class ReadyButton extends React.Component {
     const playerName = this.props.playerName;
     battleshipCoordinates.forEach(function(coordinate) {
       postMessage({
-        text: `Game ${gameNumber} battleship ${coordinate}`
+        text: `${gameNumber} battleship ${coordinate}`
       });
       boards[playerName][coordinate].ship = "battleship";
       startBoard(boards);
@@ -75,7 +75,7 @@ class ReadyButton extends React.Component {
     const playerName = this.props.playerName;
     carrierCoordinates.forEach(function(coordinate) {
       postMessage({
-        text: `Game ${gameNumber} carrier ${coordinate}`
+        text: `${gameNumber} carrier ${coordinate}`
       });
       boards[playerName][coordinate].ship = "carrier";
       startBoard(boards);
@@ -88,7 +88,7 @@ class ReadyButton extends React.Component {
     const playerName = this.props.playerName;
     cruiserCoordinates.forEach(function(coordinate) {
       postMessage({
-        text: `Game ${gameNumber} cruiser ${coordinate}`
+        text: `${gameNumber} cruiser ${coordinate}`
       });
       boards[playerName][coordinate].ship = "cruiser";
       startBoard(boards);
@@ -101,7 +101,7 @@ class ReadyButton extends React.Component {
     const playerName = this.props.playerName;
     destroyerCoordinates.forEach(function(coordinate) {
       postMessage({
-        text: `Game ${gameNumber} destroyer ${coordinate}`
+        text: `${gameNumber} destroyer ${coordinate}`
       });
       boards[playerName][coordinate].ship = "destroyer";
       startBoard(boards);
@@ -114,7 +114,7 @@ class ReadyButton extends React.Component {
     const playerName = this.props.playerName;
     submarineCoordinates.forEach(function(coordinate) {
       postMessage({
-        text: `Game ${gameNumber} submarine ${coordinate}`
+        text: `${gameNumber} submarine ${coordinate}`
       });
       boards[playerName][coordinate].ship = "submarine";
       startBoard(boards);
@@ -147,7 +147,7 @@ class ReadyButton extends React.Component {
       return;
     }
     this.setState({ playerReady: true });
-    this.props.postMessage({ text: `Game ${this.props.gameNumber} ready` });
+    this.props.postMessage({ text: `${this.props.gameNumber} ready` });
     this.startCheckingForOpponentReady();
   };
 
@@ -172,9 +172,7 @@ const mapStateToProps = state => {
     destroyer: state.setUpGame.placeDestroyer.result,
     submarine: state.setUpGame.placeSubmarine.result,
     playerName: state.auth.login.result.username,
-    gameNumber: state.welcome.startGame.result
-      ? state.welcome.startGame.result.message.text.slice(5, 9)
-      : undefined
+    gameNumber: state.welcome.gameNumber.result
   };
 };
 const mapDispatchToProps = {

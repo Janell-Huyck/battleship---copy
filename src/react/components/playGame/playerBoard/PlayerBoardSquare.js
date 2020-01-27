@@ -10,17 +10,18 @@ export default function PlayerBoardSquare(props) {
   }
 
   const handleShipImage = () => {
-    let shipImageClass = ""
-    
+    let shipImageClass = "";
+
     if (props.shipImage) {
-      shipImageClass = props.shipImage.slice(2)
-      shipImageClass = shipImageClass.slice(0,-4)
-      console.log(shipImageClass)
+      shipImageClass = props.shipImage.slice(2);
+      shipImageClass = shipImageClass.slice(0, -4);
       return (
         <span>
-          <img src={props.shipImage} alt="ship" className={shipImageClass}>
-            {console.log("I'm here", props.shipImage)}
-          </img>
+          <img
+            src={props.shipImage}
+            alt="ship"
+            className={shipImageClass}
+          ></img>
         </span>
       );
     }

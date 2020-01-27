@@ -1,8 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-// import { OpponentBoardGrid } from ".";
-// import { checkForLose } from "../checkForLose";
-// import { WaitScreen } from "../../waitScreen";
 import { deleteMessage, getOldMessages } from "../../../redux/index";
 
 class DeleteOldMessagesButton extends React.Component {
@@ -42,11 +39,7 @@ const mapStateToProps = state => {
         ? state.play.addCoordinates.result
         : null,
 
-      board: state.manipulateBoards.startBoard.result,
-
-      gameNumber: state.welcome.startGame.result
-        ? state.welcome.startGame.result.message.text.slice(5, 9)
-        : undefined
+      board: state.manipulateBoards.startBoard.result
     };
   } else return {};
 };

@@ -1,28 +1,30 @@
 export const checkForLose = playerBoard => {
   let arrayOfSinkage = [];
-  if (checkForPlayerBattleship(playerBoard)) {
+  if (checkForSunkBattleship(playerBoard)) {
     arrayOfSinkage.push("battleship");
+    console.log("battleship is sunk");
   }
-  if (checkForPlayerCarrier(playerBoard)) {
+  if (checkForSunkCarrier(playerBoard)) {
     arrayOfSinkage.push("carrier");
+    console.log("carrier is sunk");
+  }
+  if (checkForSunkCruiser(playerBoard)) {
+    arrayOfSinkage.push("cruiser");
+    console.log("cruiser is sunk");
+  }
+  if (checkForSunkDestroyer(playerBoard)) {
+    arrayOfSinkage.push("destroyer");
+    console.log("destroyer is sunk");
+  }
+  if (checkForSunkSubmarine(playerBoard)) {
+    arrayOfSinkage.push("submarine");
+    console.log("submarine is sunk");
   }
 
-  if (checkForPlayerCruiser(playerBoard)) {
-    arrayOfSinkage.push("cruiser");
-  }
-  if (checkForPlayerDestroyer(playerBoard)) {
-    arrayOfSinkage.push("destroyer");
-  }
-  if (checkForPlayerSubmarine(playerBoard)) {
-    arrayOfSinkage.push("submarine");
-  }
-  if (arrayOfSinkage.length === 5) {
-    return true;
-  }
   return arrayOfSinkage;
 };
 
-export const checkForPlayerBattleship = playerBoard => {
+export const checkForSunkBattleship = playerBoard => {
   let numberOfHits = 0;
   for (let coordinates in playerBoard) {
     if (
@@ -36,7 +38,7 @@ export const checkForPlayerBattleship = playerBoard => {
   }
 };
 
-export const checkForPlayerCarrier = playerBoard => {
+export const checkForSunkCarrier = playerBoard => {
   let numberOfHits = 0;
   for (let coordinates in playerBoard) {
     if (
@@ -50,7 +52,7 @@ export const checkForPlayerCarrier = playerBoard => {
   }
 };
 
-export const checkForPlayerCruiser = playerBoard => {
+export const checkForSunkCruiser = playerBoard => {
   let numberOfHits = 0;
   for (let coordinates in playerBoard) {
     if (
@@ -64,7 +66,7 @@ export const checkForPlayerCruiser = playerBoard => {
   }
 };
 
-export const checkForPlayerSubmarine = playerBoard => {
+export const checkForSunkSubmarine = playerBoard => {
   let numberOfHits = 0;
   for (let coordinates in playerBoard) {
     if (
@@ -78,7 +80,7 @@ export const checkForPlayerSubmarine = playerBoard => {
   }
 };
 
-export const checkForPlayerDestroyer = playerBoard => {
+export const checkForSunkDestroyer = playerBoard => {
   let numberOfHits = 0;
   for (let coordinates in playerBoard) {
     if (

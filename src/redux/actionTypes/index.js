@@ -11,8 +11,8 @@ export const LOGIN = createActionTypes("LOGIN");
 export const LOGOUT = createActionTypes("LOGOUT");
 
 //action types for update board
-export const STARTBOARD = createActionTypes("STARTBOARD")
-export const UPDATEBOARD = createActionTypes("UPDATEBOARD")
+export const STARTBOARD = createActionTypes("STARTBOARD");
+export const UPDATEBOARD = createActionTypes("UPDATEBOARD");
 
 //action type for play game
 export const FIRETORPEDO = createActionTypes("FIRETORPEDO");
@@ -36,6 +36,7 @@ export const POSTCOORDINATESMESSAGE = createActionTypes(
 export const STARTGAME = createActionTypes("STARTGAME");
 export const DELETEMESSAGE = createActionTypes("DELETEMESSAGE");
 export const GETOLDMESSAGES = createActionTypes("GETOLDMESSAGES");
+export const GAMENUMBER = createActionTypes("GAMENUMBER");
 
 //action types related to the waiting/memo screens
 
@@ -47,3 +48,7 @@ export const POSTMESSAGE = createActionTypes("POSTMESSAGE");
 export const OPPONENTTORPEDOCOORDINATES = createActionTypes(
   "OPPONENTTORPEDOCOORDINATES"
 );
+
+//action types for determining the winner
+export const WINNER = createActionTypes("WINNER");
+export const POSTWINNER = createActionTypes("POSTWINNER");

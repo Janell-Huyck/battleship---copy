@@ -9,7 +9,6 @@ import {
   startBoard
 } from "../../../redux/index";
 import { boards } from "."; //the big long array of possible locations
-import { blankBoardForRedux } from ".";
 
 class RandomSetupButton extends React.Component {
   battleship = {
@@ -81,10 +80,10 @@ class RandomSetupButton extends React.Component {
     }
   };
   resetReduxBoard = () => {
-    for (let [key, value] of Object.entries(boards.playerA)) {
+    for (let [, value] of Object.entries(boards.playerA)) {
       value.ship = null;
     }
-    for (let [key, value] of Object.entries(boards.playerB)) {
+    for (let [, value] of Object.entries(boards.playerB)) {
       value.ship = null;
     }
     this.props.startBoard(boards);
@@ -96,7 +95,6 @@ class RandomSetupButton extends React.Component {
     this.generateRandomStartOrientation(ship);
     if (this.checkCoordinatesAreOnBoard(ship) === true) {
       if (this.doCoordinatesOverlapOtherShips(ship) === false) {
-        console.log(ship.name + ": " + ship.coordinates);
         return ship;
       }
     }
@@ -126,27 +124,16 @@ class RandomSetupButton extends React.Component {
       let reduxSquare = this.props.board[this.props.playerName][
         ship.coordinates[coordinateChecked]
       ].ship;
-      console.log(reduxSquare);
 
       if (reduxSquare !== null) {
-        console.log("found a ship at " + ship.coordinates[coordinateChecked]);
         return true;
       }
     }
-    console.log("no overlap found");
     return false;
   };
 
   checkCoordinatesAreOnBoard = ship => {
     let rowHeaders = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-    console.log("ship name is " + ship.name);
-    console.log("ship orientation is " + ship.orientation);
-    console.log(
-      "starting numbers are row " +
-        rowHeaders[ship.row] +
-        " column " +
-        ship.column
-    );
     for (
       let coordinateCounter = 0;
       coordinateCounter < ship.length;
@@ -158,7 +145,6 @@ class RandomSetupButton extends React.Component {
             rowHeaders[ship.row] + (ship.column + coordinateCounter)
           );
         } else {
-          console.log("exceeded available columns.");
           return false;
         }
       } else {
@@ -167,7 +153,6 @@ class RandomSetupButton extends React.Component {
             rowHeaders[ship.row + coordinateCounter] + ship.column
           );
         } else {
-          console.log("exceeded available rows.");
           return false;
         }
       }

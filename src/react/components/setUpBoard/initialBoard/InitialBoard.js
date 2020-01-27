@@ -29,7 +29,7 @@ class InitialBoard extends React.Component {
         </div>
         <ClearBoardButton />
         <ReadyButton />
-        <button onClick={this.devToolsButton}>Go To Dev Tools</button>
+        {/* <button onClick={this.devToolsButton}>Go To Dev Tools</button> */}
       </React.Fragment>
     );
   }

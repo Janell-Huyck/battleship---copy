@@ -23,9 +23,7 @@ class InitialBoardGrid extends React.Component {
   targetRow = null;
   targetColumn = null;
 
-  componentDidMount = () => {
-    console.log(this.state.playerName);
-  };
+  componentDidMount = () => {};
 
   drawSquare = (label, isShip, whichShip) => {
     return (
@@ -173,56 +171,48 @@ class InitialBoardGrid extends React.Component {
     return positionObject;
   };
 
-  drawShipStartingHere = (cellLabel) => {
-    if(this.props.battleshipPosition){
+  drawShipStartingHere = cellLabel => {
+    if (this.props.battleshipPosition) {
     }
-    if(
+    if (
       this.props.battleshipPosition &&
-      cellLabel === this.props.battleshipPosition.coordinates[0]){
-      if(this.props.battleshipPosition.orientation === "horizontal"){
-        return "./horizShip4.png"
-      }
-      else return "./vertShip4.png"
-
-    }
-    else if(
+      cellLabel === this.props.battleshipPosition.coordinates[0]
+    ) {
+      if (this.props.battleshipPosition.orientation === "horizontal") {
+        return "./horizShip4.png";
+      } else return "./vertShip4.png";
+    } else if (
       this.props.carrierPosition &&
-      cellLabel === this.props.carrierPosition.coordinates[0]){
-      if(this.props.carrierPosition.orientation === "horizontal"){
-        return "./horizShip5.png"
-      }
-      else return "./vertShip5.png"
-
-    }
-    else if(
+      cellLabel === this.props.carrierPosition.coordinates[0]
+    ) {
+      if (this.props.carrierPosition.orientation === "horizontal") {
+        return "./horizShip5.png";
+      } else return "./vertShip5.png";
+    } else if (
       this.props.cruiserPosition &&
-      cellLabel === this.props.cruiserPosition.coordinates[0]){
-      if(this.props.cruiserPosition.orientation === "horizontal"){
-        return "./horizShip2.png"
-      }
-      else return "./vertShip2.png"
-
-    }
-    else if(
+      cellLabel === this.props.cruiserPosition.coordinates[0]
+    ) {
+      if (this.props.cruiserPosition.orientation === "horizontal") {
+        return "./horizShip2.png";
+      } else return "./vertShip2.png";
+    } else if (
       this.props.submarinePosition &&
-      cellLabel === this.props.submarinePosition.coordinates[0]){
-      if(this.props.submarinePosition.orientation === "horizontal"){
-        return "./horizShip3.png"
-      }
-      else return "./vertShip3.png"
-
-    }
-    else if(
+      cellLabel === this.props.submarinePosition.coordinates[0]
+    ) {
+      if (this.props.submarinePosition.orientation === "horizontal") {
+        return "./horizShip3.png";
+      } else return "./vertShip3.png";
+    } else if (
       this.props.destroyerPosition &&
-      cellLabel === this.props.destroyerPosition.coordinates[0]){
-      if(this.props.destroyerPosition.orientation === "horizontal"){
-        return "./horizShip1.png"
-      }
-      else return "./vertShip1.png"
-
+      cellLabel === this.props.destroyerPosition.coordinates[0]
+    ) {
+      if (this.props.destroyerPosition.orientation === "horizontal") {
+        return "./horizShip1.png";
+      } else return "./vertShip1.png";
+    } else {
+      return false;
     }
-    else {return false}
-  }
+  };
 
   render() {
     this.newBoard = [];
@@ -253,11 +243,14 @@ class InitialBoardGrid extends React.Component {
           newSquare = this.drawSquare(this.label, false, null);
         }
         if (this.doesAShipResideHereAndIfSoWhichOne(this.label)) {
-          if(!this.drawShipStartingHere(this.label)){
-          newSquare = this.drawSquare(this.label, true, null);
-          }
-          else{
-            newSquare = this.drawSquare(this.label, true, this.drawShipStartingHere(this.label))
+          if (!this.drawShipStartingHere(this.label)) {
+            newSquare = this.drawSquare(this.label, true, null);
+          } else {
+            newSquare = this.drawSquare(
+              this.label,
+              true,
+              this.drawShipStartingHere(this.label)
+            );
           }
         }
         this.newRow.push(newSquare);
