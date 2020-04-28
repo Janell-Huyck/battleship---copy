@@ -1,0 +1,138 @@
+/* This body background is the sea image that LeighAnn had found... we're going with the background image Drashti found because it is used in the rest of the site.  I'm temporarily leaving this code in here in case the group changes its mind. */
+
+body {
+  width: 100%;
+  position: relative;
+  /* padding: 0;
+  margin: 0;
+  background-image: url(../../../Battleship-image/winLoseAnimationImages/battleshipSea.png);
+  background-repeat: no-repeat;
+  width: 100%; */
+}
+
+/* battlships styles */
+
+.ship {
+  height: 100px;
+  width: 350px;
+  background-image: url(../../../Battleship-image/winLoseAnimationImages/ship.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  animation-name: move-ship;
+  animation-duration: 2.5s;
+  animation-fill-mode: forwards;
+  top: 50%;
+  left: 20%;
+  opacity: 100%;
+  z-index: 6;
+}
+
+.torpedo {
+  height: 350px;
+  width: 250px;
+  background-image: url(../../../Battleship-image/winLoseAnimationImages/torpedo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  animation-name: move-torpedo;
+  animation-duration: 2.5s;
+  animation-fill-mode: forwards;
+  top: 39%;
+  right: 0px;
+  opacity: 100%;
+  z-index: 6;
+}
+
+.explosion {
+  height: 100%;
+  width: 100%;
+  background-image: url(../../../Battleship-image/winLoseAnimationImages/explosion.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  animation-name: explode;
+  animation-duration: 2.5s;
+  animation-fill-mode: forwards;
+  top: 20%;
+  left: -40%;
+  z-index: 6;
+  opacity: 0%;
+}
+
+.win-text {
+  color: white;
+  position: absolute;
+  animation-name: you-win;
+  animation-duration: 2.5s;
+  animation-fill-mode: forwards;
+  top: 70%;
+  right: 15vh;
+  opacity: 0%;
+  z-index: 6;
+}
+
+@keyframes you-win {
+  0% {
+    opacity: 0%;
+  }
+  50% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+@keyframes move-ship {
+  0% {
+    top: 50%;
+    left: 0;
+    opacity: 100%;
+  }
+  45% {
+    opacity: 100%;
+  }
+  46% {
+    opacity: 0%;
+  }
+  100% {
+    top: 50%;
+    left: 10%;
+    opacity: 0%;
+  }
+}
+
+@keyframes move-torpedo {
+  0% {
+    top: 39%;
+    right: 0;
+    opacity: 100%;
+  }
+  45% {
+    opacity: 100%;
+  }
+  46% {
+    opacity: 0%;
+  }
+  100% {
+    top: 39%;
+    right: 70%;
+    opacity: 0%;
+  }
+}
+
+@keyframes explode {
+  0% {
+    opacity: 0%;
+  }
+  45% {
+    opacity: 0%;
+  }
+  46% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}

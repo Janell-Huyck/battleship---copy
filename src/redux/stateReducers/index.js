@@ -7,7 +7,7 @@ import * as play from "./play";
 import * as manipulateBoards from "./manipulateBoards";
 import * as welcome from "./welcome";
 import * as waitScreen from "./waitScreen";
-
+import * as winner from "./winner";
 
 export default history =>
   combineReducers({
@@ -18,5 +18,6 @@ export default history =>
     play: combineReducers(play),
     manipulateBoards: combineReducers(manipulateBoards),
     welcome: combineReducers(welcome),
-    waitScreen: combineReducers(waitScreen)
+    waitScreen: combineReducers(waitScreen),
+    winner: combineReducers(winner)
   });

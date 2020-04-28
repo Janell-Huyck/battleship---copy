@@ -1,8 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-// import { OpponentBoardGrid } from ".";
-// import { checkForLose } from "../checkForLose";
-// import { WaitScreen } from "../../waitScreen";
 import { deleteMessage, getOldMessages } from "../../../redux/index";
 
 class DeleteOldMessagesButton extends React.Component {
@@ -20,8 +17,9 @@ class DeleteOldMessagesButton extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <h2> Note: wait 5 seconds between clicks</h2>
+        <h3> Note: wait 5 seconds between clicks</h3>
         <button onClick={this.deleteOldMessages}>Delete Old Messages</button>
+        <h4>Also note: this will delete your start-game message as well.</h4>
       </React.Fragment>
     );
   }
@@ -41,11 +39,7 @@ const mapStateToProps = state => {
         ? state.play.addCoordinates.result
         : null,
 
-      board: state.manipulateBoards.startBoard.result,
-
-      gameNumber: state.welcome.startGame.result
-        ? state.welcome.startGame.result.message.text.slice(5, 9)
-        : undefined
+      board: state.manipulateBoards.startBoard.result
     };
   } else return {};
 };

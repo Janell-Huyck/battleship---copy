@@ -1,20 +1,17 @@
 import React from "react";
 import "./PlayGame.css";
-import {
-  DeleteOldMessagesButton
-  //   DefaultSetupButton
-} from "../components/devTools";
+import { DeleteOldMessagesButton } from "../components/devTools";
 import { connect } from "../HOCs";
 import { startBoard, getOldMessages } from "../../redux/index";
+import { WinButton } from "../components/devTools";
 
 class DevTools extends React.Component {
-  componentDidMount = () => {};
-
   render() {
     return (
       <React.Fragment>
         <DeleteOldMessagesButton />
-        {/* <DefaultSetupButton /> */}
+        <h3>Win Animation</h3>
+        <WinButton />
       </React.Fragment>
     );
   }
@@ -24,8 +21,8 @@ const mapStateToProps = state => {
     playerName: state.welcome.startGame.result
       ? state.welcome.startGame.result.message.username
       : null,
-    gameNumber: state.welcome.startGame.result
-      ? state.welcome.startGame.result.message.text.slice(5, 9)
+    gameNumber: state.welcome.gameNumber
+      ? state.welcome.gameNumber.result
       : null,
     board: state.manipulateBoards.startBoard.result
   };

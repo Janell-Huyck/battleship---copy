@@ -1,25 +1,28 @@
 import React from "react";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { connect } from "../../HOCs";
-import { getOldMessages, deleteMessage } from "../../../redux/actionCreators";
+import { postMessage, winner } from "../../../redux/index";
 
 class SurrenderButton extends React.Component {
-  onConfirm = () => {
-    var goHome = window.confirm("Click OK to be redirected to the home page.");
-    if (goHome) {
-      this.deleteOldMessages();
-    }
+  state = {
+    opponentName: ""
   };
 
-  deleteOldMessages = () => {
-    this.props
-      .getOldMessages(this.props.playerName)
-      .then(result => {
-        result.payload.messages.map(message =>
-          this.props.deleteMessage(message.id, this.props.token)
-        );
-      })
-      .then((window.location.href = "/"));
+  componentDidMount = () => {
+    this.determineOpponent();
+  };
+
+  determineOpponent = () => {
+    let opponentName =
+      this.props.playerName === "playerA" ? "playerB" : "playerA";
+    this.setState({ opponentName: opponentName });
+  };
+
+  onConfirm = () => {
+    let gameNumber = this.props.gameNumber;
+    console.log("message confirmed");
+    this.props.postMessage({ text: `${gameNumber} surrender` });
+    this.props.winner(this.state.opponentName);
   };
 
   confirmAlert = () => {
@@ -34,14 +37,12 @@ class SurrenderButton extends React.Component {
 }
 const mapStateToProps = state => {
   return {
+    gameNumber: state.welcome.gameNumber.result,
     playerName: state.auth.login.result.username,
     token: state.auth.login.result.token
   };
 };
 
-const mapDispatchToProps = {
-  deleteMessage,
-  getOldMessages
-};
+const mapDispatchToProps = { winner, postMessage };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SurrenderButton);

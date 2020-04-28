@@ -1,6 +1,7 @@
 import React from "react";
 import { Battleship, Carrier, Cruiser, Destroyer, Submarine } from "../ships";
 import { connect, withAsyncAction } from "../../HOCs";
+import { RandomSetupButton } from ".";
 
 class ShipsAvailable extends React.Component {
   renderBattleship = () => {
@@ -138,8 +139,9 @@ class ShipsAvailable extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="shipsAvailable">
-          {/*  {this.props.nameOfSelectedShip && (
+        <div className="shipsAndRandom">
+          <div className="shipsAvailable">
+            {/*  {this.props.nameOfSelectedShip && (
             <div className="shipInstructions">
               Click on the board to place the ship.
             </div>
@@ -149,12 +151,14 @@ class ShipsAvailable extends React.Component {
               Click on a ship to select it.
             </div>
           )} */}
-          {this.renderShipPlacingInstructions()}
-          {this.renderBattleship()}
-          {this.renderCarrier()}
-          {this.renderSubmarine()}
-          {this.renderCruiser()}
-          {this.renderDestroyer()}
+            {this.renderShipPlacingInstructions()}
+            {this.renderBattleship()}
+            {this.renderCarrier()}
+            {this.renderSubmarine()}
+            {this.renderCruiser()}
+            {this.renderDestroyer()}
+          </div>
+          <RandomSetupButton />
         </div>
       </React.Fragment>
     );

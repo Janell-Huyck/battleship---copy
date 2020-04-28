@@ -60,8 +60,8 @@ const mapStateToProps = state => {
     playerName: state.welcome.startGame.result
       ? state.welcome.startGame.result.message.username
       : null,
-    gameNumber: state.welcome.startGame.result
-      ? state.welcome.startGame.result.message.text.slice(5, 9)
+    gameNumber: state.welcome.gameNumber
+      ? state.welcome.gameNumber.result
       : null,
     reduxLayerBoard: state.manipulateBoards.startBoard.result
   };

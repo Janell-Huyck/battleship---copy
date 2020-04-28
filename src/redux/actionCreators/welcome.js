@@ -1,9 +1,9 @@
 import { domain, jsonHeaders, handleJsonResponse } from "./constants";
-import { STARTGAME } from "../actionTypes";
+import { STARTGAME, GAMENUMBER } from "../actionTypes";
 
 const url = domain + "/messages";
 
-export const startGame = gameNumber => (dispatch, getState) => {
+export const _startGame = gameNumber => (dispatch, getState) => {
   dispatch({
     type: STARTGAME.START
   });
@@ -24,4 +24,17 @@ export const startGame = gameNumber => (dispatch, getState) => {
     .catch(err => {
       return Promise.reject(dispatch({ type: STARTGAME.FAIL, payload: err }));
     });
+};
+
+export const _gameNumber = messageData => dispatch => {
+  return dispatch({
+    type: GAMENUMBER.SUCCESS,
+    payload: messageData
+  });
+};
+
+export const startGame = gameNumber => dispatch => {
+  return dispatch(_startGame(gameNumber)).then(() => {
+    return dispatch(_gameNumber("Game " + gameNumber));
+  });
 };

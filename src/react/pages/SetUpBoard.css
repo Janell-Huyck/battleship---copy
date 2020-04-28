@@ -20,76 +20,10 @@
   background-color: var(--battleshipNavy);
 }
 
-.horizShip1{
+.horizShip1 {
   --squareSize: 6vh;
- height: var(--squareSize);
- width: calc(var(--squareSize)*2);
- position: absolute;
- z-index: 2;
- margin: 0;
- border: 0;
- padding: 0;
-}
-
-.vertShip1{
- --squareSize: 6vh;
-width: var(--squareSize);
-height: calc(var(--squareSize)*2);
-position: absolute;
-z-index: 2;
-margin: 0;
-border: 0;
-padding: 0;
-}
-
-.horizShip2{
-  --squareSize: 6vh;
- height: var(--squareSize);
- width: calc(var(--squareSize)*3);
- position: absolute;
- z-index: 2;
- margin: 0;
- border: 0;
- padding: 0;
-}
-
-.vertShip2{
- --squareSize: 6vh;
-width: var(--squareSize);
-height: calc(var(--squareSize)*3);
-position: absolute;
-z-index: 2;
-margin: 0;
-border: 0;
-padding: 0;
-}
-
-.horizShip3{
-  --squareSize: 6vh;
- height: var(--squareSize);
- width: calc(var(--squareSize)*3);
- position: absolute;
- z-index: 2;
- margin: 0;
- border: 0;
- padding: 0;
-}
-
-.vertShip3{
- --squareSize: 6vh;
-width: var(--squareSize);
-height: calc(var(--squareSize)*3);
-position: absolute;
-z-index: 2;
-margin: 0;
-border: 0;
-padding: 0;
-}
-
-.horizShip4{
-   --squareSize: 6vh;
   height: var(--squareSize);
-  width: calc(var(--squareSize)*4);
+  width: calc(var(--squareSize) * 2);
   position: absolute;
   z-index: 2;
   margin: 0;
@@ -97,36 +31,102 @@ padding: 0;
   padding: 0;
 }
 
-.vertShip4{
+.vertShip1 {
   --squareSize: 6vh;
- width: var(--squareSize);
- height: calc(var(--squareSize)*4);
- position: absolute;
- z-index: 2;
- margin: 0;
- border: 0;
- padding: 0;
-}
-.horizShip5{
-  --squareSize: 6vh;
- height: var(--squareSize);
- width: calc(var(--squareSize)*5);
- position: absolute;
- z-index: 2;
- margin: 0;
- border: 0;
- padding: 0;
+  width: var(--squareSize);
+  height: calc(var(--squareSize) * 2);
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  border: 0;
+  padding: 0;
 }
 
-.vertShip5{
- --squareSize: 6vh;
-width: var(--squareSize);
-height: calc(var(--squareSize)*5);
-position: absolute;
-z-index: 2;
-margin: 0;
-border: 0;
-padding: 0;
+.horizShip2 {
+  --squareSize: 6vh;
+  height: var(--squareSize);
+  width: calc(var(--squareSize) * 3);
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.vertShip2 {
+  --squareSize: 6vh;
+  width: var(--squareSize);
+  height: calc(var(--squareSize) * 3);
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.horizShip3 {
+  --squareSize: 6vh;
+  height: var(--squareSize);
+  width: calc(var(--squareSize) * 3);
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.vertShip3 {
+  --squareSize: 6vh;
+  width: var(--squareSize);
+  height: calc(var(--squareSize) * 3);
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.horizShip4 {
+  --squareSize: 6vh;
+  height: var(--squareSize);
+  width: calc(var(--squareSize) * 4);
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.vertShip4 {
+  --squareSize: 6vh;
+  width: var(--squareSize);
+  height: calc(var(--squareSize) * 4);
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+.horizShip5 {
+  --squareSize: 6vh;
+  height: var(--squareSize);
+  width: calc(var(--squareSize) * 5);
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.vertShip5 {
+  --squareSize: 6vh;
+  width: var(--squareSize);
+  height: calc(var(--squareSize) * 5);
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  border: 0;
+  padding: 0;
 }
 
 .hitOrMissToken {
@@ -142,8 +142,6 @@ padding: 0;
   transform: translate(50%, 50%);
 }
 
-
-
 .shipsAvailable {
   display: flex;
   flex-direction: column;
@@ -154,12 +152,23 @@ padding: 0;
   justify-content: flex-start;
   justify-items: center;
   align-items: center;
-  margin-left: 10vh;
-  margin-right: 4vh;
   max-height: 80vh;
   box-shadow: 0px 10px 35px var(--battleshipBlueColumnLines);
   border: 2px solid var(--battleshipBlueColumnLines);
+  margin: 0vh 4vh 0vh 4vh;
+}
+
+.shipsAndRandom {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   margin: 4vh;
+  justify-content: stretch;
+}
+
+.shipsAndRandom button {
+  width: 80%;
+  align-self: center;
 }
 
 .initialBoard {

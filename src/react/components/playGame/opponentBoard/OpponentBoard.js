@@ -6,22 +6,21 @@ import { WaitScreen } from "../../waitScreen";
 import {
   addCoordinates,
   fetchLastMessage,
-  startBoard
+  startBoard,
+  winner,
+  postWinner
 } from "../../../../redux/index";
 import { FireButton } from "../index";
+import { WinLoseAnimation } from "../../winLoseAnimations";
 
 class OpponentBoard extends React.Component {
   state = {
     opponentTurn: false,
     waitMessage: "Waiting for your opponent to take a turn...",
-    winMessage: "Congratulations!  You won!  Your opponent has surrendered.",
     TargetCell: "",
     opponentName: "",
-    playerHasWon: false,
     hitAddress: [],
     missAddress: [],
-    didOpponentWin: false,
-    didOpponentAcknowledgeWin: false,
     didOpponentSinkBattleship: false,
     didOpponentSinkCarrier: false,
     didOpponentSinkCruiser: false,
@@ -46,7 +45,7 @@ class OpponentBoard extends React.Component {
   determineFirstMove = () => {
     if (this.props.playerName === "playerB") {
       this.setState({ opponentTurn: true });
-      this.startWaitingForOpponent();
+      this.checkOpponentTurn();
     }
   };
 
@@ -54,7 +53,7 @@ class OpponentBoard extends React.Component {
     clearInterval();
   };
 
-  startWaitingForOpponent = () => {};
+  // startWaitingForOpponent = () => {};
 
   checkOpponentTurn = () => {
     if (this.state.opponentTurn === false) {
@@ -66,11 +65,12 @@ class OpponentBoard extends React.Component {
         .slice(-1);
       let messageGameNumber = result.payload.messages[0].text
         .split(" ")
-        .slice(1, 2);
+        .slice(0, 2)
+        .join(" ");
       if (messageGameNumber && this.props.gameNumber) {
-        if (messageGameNumber.toString() === this.props.gameNumber.toString()) {
+        if (messageGameNumber === this.props.gameNumber) {
           if (result.payload.messages[0].text.includes("surrender")) {
-            this.setState({ playerHasWon: true });
+            postWinner(this.props.playerName);
           }
           if (result.payload.messages[0].text.includes("torpedo")) {
             let torpedoStatus = this.props.board[this.props.playerName][
@@ -103,11 +103,17 @@ class OpponentBoard extends React.Component {
     if (this.checkThatNoTorpedoHasBeenFiredHere(event.target.innerHTML)) {
       this.setState({ TargetCell: event.target.innerHTML });
       this.props.addCoordinates(event.target.innerHTML);
-      this.startWaitingForOpponent();
+      this.checkOpponentTurn();
     }
   };
 
   checkThatNoTorpedoHasBeenFiredHere = gridSquare => {
+    if (!this.props.board[this.state.opponentName][gridSquare]) {
+      console.log(
+        "error in checkThatNoTorpedoHasBeenFiredHere!  square to check is: " +
+          this.props.board[this.state.opponentName][gridSquare]
+      );
+    }
     if (
       this.props.board[this.state.opponentName][gridSquare].torpedo === false
     ) {
@@ -118,7 +124,6 @@ class OpponentBoard extends React.Component {
 
   handleFireButtonClick = () => {
     if (this.state.TargetCell) {
-      console.log("we have a target cell " + this.state.TargetCell);
       this.checkStateForHitMarkers(this.props.TargetCell);
       this.setState({ opponentTurn: true, TargetCell: "" });
     } else {
@@ -149,37 +154,38 @@ class OpponentBoard extends React.Component {
   };
 
   checkForPlayerLoss = boards => {
-    if (checkForLose(boards[this.props.playerName]) === true) {
-      this.setState({ didPlayerLose: true });
+    let sunkenShips = checkForLose(boards[this.props.playerName]);
+    console.log("there are " + sunkenShips.length + " ships sunk so far.");
+    if (sunkenShips.length === 5) {
+      console.log("running winner(this.state.opponentName) now.");
+      winner(this.state.opponentName);
     } else {
       if (!this.state.didOpponentSinkBattleship) {
-        if (
-          checkForLose(boards[this.props.playerName]).includes("battleship")
-        ) {
+        if (sunkenShips.includes("battleship")) {
           this.setState({ didOpponentSinkBattleship: true });
           alert("Your opponent sank your battleship!");
         }
       }
       if (!this.state.didOpponentSinkCarrier) {
-        if (checkForLose(boards[this.props.playerName]).includes("carrier")) {
+        if (sunkenShips.includes("carrier")) {
           this.setState({ didOpponentSinkCarrier: true });
           alert("Your opponent sank your carrier!");
         }
       }
       if (!this.state.didOpponentSinkCruiser) {
-        if (checkForLose(boards[this.props.playerName]).includes("cruiser")) {
+        if (sunkenShips.includes("cruiser")) {
           this.setState({ didOpponentSinkCruiser: true });
           alert("Your opponent sank your cruiser!");
         }
       }
       if (!this.state.didOpponentSinkSubmarine) {
-        if (checkForLose(boards[this.props.playerName]).includes("submarine")) {
+        if (sunkenShips.includes("submarine")) {
           this.setState({ didOpponentSinkSubmarine: true });
           alert("Your opponent sank your submarine!");
         }
       }
       if (!this.state.didOpponentSinkDestroyer) {
-        if (checkForLose(boards[this.props.playerName]).includes("destroyer")) {
+        if (sunkenShips.includes("destroyer")) {
           this.setState({ didOpponentSinkDestroyer: true });
           alert("Your opponent sank your destroyer!");
         }
@@ -188,20 +194,18 @@ class OpponentBoard extends React.Component {
   };
 
   render() {
-    if (this.state.didPlayerLose) {
-      return (
-        <WaitScreen message="Your opponent destroyed your fleet! You lose!">
-          true
-        </WaitScreen>
-      );
+    if (this.props.winner.result) {
+      if (this.props.winner.result === this.props.playerName) {
+        return <WinLoseAnimation message="You Win!" />;
+      } else if (this.props.winner.result === this.state.opponentName) {
+        return <WinLoseAnimation message="You Lose!" />;
+      }
     }
+
     return (
       <React.Fragment>
         {this.state.opponentTurn && (
           <WaitScreen message={this.state.waitMessage} />
-        )}
-        {this.state.playerHasWon && (
-          <WaitScreen message={this.state.winMessage} />
         )}
         <div className={"opponentBoard"}>
           <h3>Opponent Board</h3>
@@ -223,6 +227,8 @@ class OpponentBoard extends React.Component {
 const mapStateToProps = state => {
   if (state.auth.login.result) {
     return {
+      winner: state.winner ? state.winner.result : null,
+
       playerName: state.auth.login.result.username,
       token: state.auth.login.result.token,
 
@@ -236,13 +242,17 @@ const mapStateToProps = state => {
 
       board: state.manipulateBoards.startBoard.result,
 
-      gameNumber: state.welcome.startGame.result
-        ? state.welcome.startGame.result.message.text.slice(5, 9)
-        : undefined
+      gameNumber: state.welcome.gameNumber.result
     };
   } else return {};
 };
 
-const mapDispatchToProps = { addCoordinates, fetchLastMessage, startBoard };
+const mapDispatchToProps = {
+  addCoordinates,
+  fetchLastMessage,
+  startBoard,
+  winner,
+  postWinner
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(OpponentBoard);

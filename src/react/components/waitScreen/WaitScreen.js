@@ -10,10 +10,10 @@ class WaitScreen extends React.Component {
     if (trueOrFalse) {
       return (
         <div>
-          {/* <Link to="/Credits">Credits </Link>; */}
-          Product Owner: Janell Hyuck; Design & CSS: LeighAnn Featheringill &
+          <Link to="/Credits">Credits </Link>;
+          {/* Product Owner: Janell Hyuck; Design & CSS: LeighAnn Featheringill &
           Givon Dickerson; Javascript, React, Redux: Andrew Belanger, Chelsea
-          White, Drashti Dalsania, Kano Marvel; API: Taylor Hurt
+          White, Drashti Dalsania, Kano Marvel; API: Taylor Hurt */}
           <Link
             to="/"
             title="Product Owner: Janell Hyuck; Design & CSS: LeighAnn Featheringill & Givon Dickerson; Javascript, React, Redux: Andrew Belanger, Chelsea White, Drashti Dalsania, Kano Marvel; API: Taylor Hurt"
@@ -29,7 +29,6 @@ class WaitScreen extends React.Component {
       <div className="waitScreen">
         <p className="waitMessage">{this.props.message}</p>
         {this.isThisAGameEndingMessage(this.props.children)}
-        {/* <button onClick={this.deleteOldMessages}>deleteOldMessages</button> */}
       </div>
     );
   }

@@ -3,7 +3,7 @@ import { withAsyncAction } from "../../HOCs";
 import { connect } from "react-redux";
 import { Redirect } from "..";
 import { WaitScreen } from "../waitScreen/";
-import { checkReadyStart, startGame } from "../../../redux/actionCreators";
+import { checkReadyStart, startGame } from "../../../redux/index";
 import "./CreateGameButton.css";
 
 class CreateGameButton extends React.Component {
@@ -24,13 +24,13 @@ class CreateGameButton extends React.Component {
   }
 
   handleClick = () => {
-    const gameNumber = this.generateGameNumber();
+    const newGameNumber = this.generateGameNumber();
     this.props.login({ username: "playerA", password: "playerA" });
 
     this.setState({
-      gameNumber: gameNumber,
+      gameNumber: newGameNumber,
       gameCreated: true,
-      message: this.generateMessage(gameNumber)
+      message: this.generateMessage(newGameNumber)
     });
     this.interval = setInterval(this.checkReadyStart, 5000);
   };
@@ -64,18 +64,18 @@ class CreateGameButton extends React.Component {
   };
 
   generateGameNumber = () => {
-    let gameNumber = "";
+    let newGameNumber = "";
     for (let i = 1; i <= 4; i++) {
       let digit = Math.floor(Math.random() * 10);
-      gameNumber = gameNumber + digit;
+      newGameNumber = newGameNumber + digit;
     }
-    return gameNumber;
+    return newGameNumber;
   };
 
-  generateMessage = gameNumber => {
+  generateMessage = newGameNumber => {
     return (
       "Waiting for your opponent to join.  Please let them know that your game number is " +
-      gameNumber
+      newGameNumber
     );
   };
 
